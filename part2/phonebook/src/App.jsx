@@ -18,32 +18,32 @@ const App = () => {
       });
   }, []);
 
-  const addPerson = (e) => {
-    e.preventDefault();
-    if (persons.find((person) => person.name === newName)) {
-      alert(`${newName} is already added to phonebook`);
-    } else {
-      const nameObject = {
-        name: newName,
-        id: persons.length + 1,
-        number: newNumber,
-      };
-      personService
-        .create(nameObject)
-        .then(initialPerson => {
-          setPersons(persons.concat(initialPerson))
-          setNewName("");
-        })
-    }
-  };
+    const addPerson = (e) => {
+        e.preventDefault();
+        if (persons.find((person) => person.name === newName)) {
+            alert(`${newName} is already added to phonebook`);
+        } else {
+            const nameObject = {
+                name: newName,
+                id: persons.length + 1,
+                number: newNumber,
+            };
+            personService
+                .create(nameObject)
+                .then(initialPerson => {
+                    setPersons(persons.concat(initialPerson))
+                    setNewName("");
+                })
+        }
+    };
 
-  const deletePerson = (id) => {
-    personService
-      .deletePerson(id)
-      .then(() => {
-        setPersons(persons.filter(n => n.id !== id))
-      })
-  }
+    const deletePerson = (id) => {
+        personService
+            .deletePerson(id)
+            .then(() => {
+                setPersons(persons.filter(n => n.id !== id))
+            })
+    }
 
   const handlePersonChange = (e) => {
     console.log(e.target.value);
