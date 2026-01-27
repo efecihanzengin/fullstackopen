@@ -23,22 +23,34 @@ const App = () => {
       });
   }, []);
 
+  const showMessage = (message, isSuccess = true) => {
+    setIsGreen(isSuccess)
+    setErrorMessage(message)
+
+    setTimeout(() => {
+      setErrorMessage("")
+    }, 5000)
+  }
+
   const addPerson = (e) => {
     e.preventDefault();
+
     if (persons.find((person) => person.name === newName)) {
       alert(`${newName} is already added to phonebook`);
-    } else {
+    }
+    else {
       const nameObject = {
         name: newName,
         number: newNumber,
       };
+
       personService
         .create(nameObject)
         .then(initialPerson => {
-          setIsGreen(true)
           setPersons(persons.concat(initialPerson))
-          setNewName("");
-          setErrorMessage(`${nameObject.name} added in phonebook`)
+          setNewName("")
+          setNewNumber("")
+          showMessage(`${initialPerson.name} added to phonebook`, true)
         })
     }
   };
@@ -49,15 +61,15 @@ const App = () => {
       personService
         .deletePerson(id)
         .then(() => {
-
           setPersons(persons.filter(n => n.id !== id))
         })
         .catch(error => {
-          setIsGreen(false)
-          setErrorMessage(`${person.id} has already removed from server`)
+          setPersons(persons.filter(n => n.id !== id))
+          showMessage(`${person.name} has already been removed from server`, false)
         })
     }
   }
+
 
   const handlePersonChange = (e) => {
     console.log(e.target.value);

@@ -1,14 +1,13 @@
 const Notification = ({ message, isGreen }) => {
 
-  if (message === null) {
+  if (!message) {
     return null
   }
+  
+  const className = isGreen ? "success" : "error"
 
   return (
-    <div style={{
-      color: isGreen ? "green" : "red",
-      borderColor: isGreen ? "green" : "red"
-    }} className="error">
+    <div className={className}>
       {message}
     </div >
   )
