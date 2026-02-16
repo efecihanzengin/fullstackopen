@@ -49,7 +49,7 @@ const App = () => {
       setNewName("");
       setNewNumber("");
     } catch (error) {
-      showMessage("there is a error occured ", false);
+      showMessage(error.response?.data?.error, false);
     }
   };
 
